@@ -1,5 +1,4 @@
 FROM ubuntu:16.04
-ARG serverip
 WORKDIR /work
 
 # ======= Installs for DNAS responses
@@ -29,6 +28,8 @@ RUN apt-get update && apt-get install bind9 bind9utils bind9-doc dnsutils -y
 ADD ./dns_files/db.dnas.rpz /etc/bind/db.dnas.rpz
 ADD ./dns_files/named.conf.local /etc/bind/named.conf.local
 ADD ./dns_files/named.conf.options /etc/bind/named.conf.options
+
+ARG serverip
 
 RUN sed -i "s/SERVER_IP/${serverip}/g" /etc/bind/db.dnas.rpz
 
