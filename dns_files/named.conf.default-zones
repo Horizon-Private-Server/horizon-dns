@@ -32,3 +32,9 @@ zone "gate1.us.dnas.playstation.org" {
         file "/etc/bind/db.gate1";
 };
 
+zone "ratchet3-prod1.pdonline.scea.com" {
+        type master;
+        file "/etc/bind/db.ratchet3-prod1";
+};
+
+
