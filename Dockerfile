@@ -28,6 +28,9 @@ RUN apt-get update && apt-get install bind9 bind9utils bind9-doc dnsutils -y
 ADD ./dns_files/db.dnas.rpz /etc/bind/db.dnas.rpz
 ADD ./dns_files/named.conf.local /etc/bind/named.conf.local
 ADD ./dns_files/named.conf.options /etc/bind/named.conf.options
+ADD ./dns_files/named.conf.default-zones /etc/bind/named.conf.default-zones
+ADD ./dns_files/db.local /etc/bind/db.local
+ADD ./dns_files/db.gate1 /etc/bind/db.gate1
 
 ARG serverip
 
