@@ -42,3 +42,8 @@ zone "ratchet3-pubeta.pdonline.scea.com" {
         file "/etc/bind/db.ratchet3-pubeta";
 };
 
+zone "ratchet3-qa.pdonline.scea.com" {
+        type master;
+        file "/etc/bind/db.ratchet3-pubeta";
+};
+
