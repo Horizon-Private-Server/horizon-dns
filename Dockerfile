@@ -25,6 +25,7 @@ ADD ./dnas.conf /etc/apache2/sites-available/dnas.conf
 # ======= Installs for DNS Bind server
 RUN apt-get update && apt-get install bind9 bind9utils bind9-doc dnsutils -y
 
+ADD ./dns_files/db.dnas.rpz /etc/bind/db.dnas.rpz
 ADD ./dns_files/named.conf.local /etc/bind/named.conf.local
 ADD ./dns_files/named.conf.options /etc/bind/named.conf.options
 
@@ -36,6 +37,10 @@ ADD ./dns_files/db.ratchet3-pubeta /etc/bind/db.ratchet3-pubeta
 ARG gateip
 ARG prodip
 ARG betaip
+
+RUN sed -i "s/GATE_IP/${gateip}/g" /etc/bind/db.dnas.rpz
+RUN sed -i "s/PROD_IP/${prodip}/g" /etc/bind/db.dnas.rpz
+RUN sed -i "s/BETA_IP/${betaip}/g" /etc/bind/db.dnas.rpz
 
 RUN sed -i "s/GATE_IP/${gateip}/g" /etc/bind/db.gate1
 RUN sed -i "s/PROD_IP/${prodip}/g" /etc/bind/db.ratchet3-prod1
