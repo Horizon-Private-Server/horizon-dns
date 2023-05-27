@@ -1,1 +1,1 @@
-docker build . -t uya-dns
+docker build . -t horizon-dns
