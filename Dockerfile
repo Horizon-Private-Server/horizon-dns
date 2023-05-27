@@ -20,31 +20,16 @@ RUN cp -r /work/DNASrep/www/dnas /var/www/dnas \
   && unlink /etc/apache2/sites-enabled/default-ssl.conf \
   && ln -sf /proc/self/fd/1 /var/log/apache2/access.log \
   && ln -sf /proc/self/fd/1 /var/log/apache2/error.log
-ADD ./dnas.conf /etc/apache2/sites-available/dnas.conf
 
 # ======= Installs for DNS Bind server
 RUN apt-get update && apt-get install bind9 bind9utils bind9-doc dnsutils -y
 
-ADD ./dns_files/db.dnas.rpz /etc/bind/db.dnas.rpz
-ADD ./dns_files/named.conf.local /etc/bind/named.conf.local
-ADD ./dns_files/named.conf.options /etc/bind/named.conf.options
+COPY . /src
 
-ADD ./dns_files/named.conf.default-zones /etc/bind/named.conf.default-zones
-ADD ./dns_files/db.gate1 /etc/bind/db.gate1
-ADD ./dns_files/db.ratchet3-prod1 /etc/bind/db.ratchet3-prod1
-ADD ./dns_files/db.ratchet3-pubeta /etc/bind/db.ratchet3-pubeta
-
-ARG gateip
-ARG prodip
-ARG betaip
-
-RUN sed -i "s/GATE_IP/${gateip}/g" /etc/bind/db.dnas.rpz
-RUN sed -i "s/PROD_IP/${prodip}/g" /etc/bind/db.dnas.rpz
-RUN sed -i "s/BETA_IP/${betaip}/g" /etc/bind/db.dnas.rpz
-
-RUN sed -i "s/GATE_IP/${gateip}/g" /etc/bind/db.gate1
-RUN sed -i "s/PROD_IP/${prodip}/g" /etc/bind/db.ratchet3-prod1
-RUN sed -i "s/BETA_IP/${betaip}/g" /etc/bind/db.ratchet3-pubeta
+RUN apt install -y vim software-properties-common
+RUN apt-get update 
+RUN apt install -y python3
+RUN cd /src && python3 run.py
 
 # DNAS Port
 EXPOSE 443
